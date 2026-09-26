@@ -1,0 +1,9 @@
+GNS3 Ethernet Switch - Configuración final
+
+Port 0: VLAN 1, dot1q, hacia FortiGate port2
+Port 1: VLAN 30, access, DB-SERVER
+Port 2: VLAN 10, access, USER-VLAN10
+Port 3: VLAN 20, access, WEB-SERVER
+Ports no utilizados: VLAN 999, access, sin gateway, sin DHCP, sin subinterfaz L3 en FortiGate.
+
+Nota: el Ethernet Switch nativo de GNS3 no ofrece CLI/running-config Cisco; esta tabla y la captura de configuración documentan su estado final.
