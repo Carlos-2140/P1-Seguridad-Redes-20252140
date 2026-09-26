@@ -1,7 +1,7 @@
 # Laboratorio de Seguridad de Redes - P1
 
-**Video:** [Agregar enlace de YouTube u OneDrive](https://www.youtube.com/playlist?list=PLHu3QdN4_OEk)
-Link: https://www.youtube.com/playlist?list=PLHu3QdN4_OEk  
+**Video:** (https://www.youtube.com/playlist?list=PLHu3QdN4_OEk)
+
 
 ## Información
 
