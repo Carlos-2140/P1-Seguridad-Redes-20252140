@@ -1,0 +1,89 @@
+USER-VLAN10 - SCRIPTS DE CONFIGURACIÓN Y PRUEBAS
+Matrícula: 2025-2140
+VLAN: 10
+Interfaz: ens3
+Direccionamiento: DHCP
+Gateway esperado: 10.21.40.1
+IP obtenida durante pruebas: 10.21.40.11/25
+
+============================================================
+1. CONFIGURACIÓN DE RED POR DHCP
+============================================================
+
+sudo tee /etc/netplan/01-netcfg.yaml > /dev/null <<'EOF'
+network:
+  version: 2
+  ethernets:
+    ens3:
+      dhcp4: true
+EOF
+
+sudo chmod 600 /etc/netplan/01-netcfg.yaml
+sudo netplan apply
+
+============================================================
+2. VERIFICACIÓN DE DHCP Y RUTAS
+============================================================
+
+ip a show ens3
+ip route
+
+============================================================
+3. PRUEBAS DE CONECTIVIDAD A INTERNET
+============================================================
+
+ping -c 4 8.8.8.8
+ping -c 4 google.com
+curl -k -I https://www.google.com
+
+============================================================
+4. PRUEBA HTTPS HACIA WEB-SERVER
+============================================================
+
+curl -k https://10.21.40.130
+
+============================================================
+5. PRUEBA DE BLOQUEO USER -> DB 3306
+============================================================
+
+nc -vz -w 5 10.21.40.146 3306
+
+============================================================
+6. PRUEBA DE SQL INJECTION CONTRA WEB-SERVER
+============================================================
+
+curl -k --connect-timeout 5 --max-time 15 \
+"https://10.21.40.130/?id=1%27%20OR%20%271%27=%271--%20"
+
+============================================================
+7. PRUEBA DE BLOQUEO DE ARCHIVOS EXE
+============================================================
+
+rm -f /tmp/test.exe
+
+curl -k -L --max-time 20 \
+-o /tmp/test.exe \
+https://10.21.40.130/test.exe
+
+ls -lh /tmp/test.exe
+
+============================================================
+8. PRUEBA DE RATE LIMITING
+============================================================
+
+curl -k -o /dev/null \
+-w "Velocidad: %{speed_download} bytes/s\nTiempo: %{time_total} segundos\n" \
+https://10.21.40.130/prueba-10mb.bin
+
+============================================================
+9. PRUEBA CONTROLADA DE SYN FLOOD
+============================================================
+
+sudo apt update
+sudo apt install -y hping3
+
+timeout 3 sudo hping3 \
+-S \
+-p 443 \
+-i u5000 \
+10.21.40.130

@@ -1,0 +1,96 @@
+DB-SERVER - SCRIPTS DE CONFIGURACIÓN
+Matrícula: 2025-2140
+IP: 10.21.40.146/28
+Gateway: 10.21.40.145
+VLAN: 30
+Interfaz: ens3
+
+============================================================
+1. CONFIGURACIÓN DE RED
+============================================================
+
+sudo tee /etc/netplan/01-netcfg.yaml > /dev/null <<'EOF'
+network:
+  version: 2
+  ethernets:
+    ens3:
+      dhcp4: false
+      addresses:
+        - 10.21.40.146/28
+      routes:
+        - to: default
+          via: 10.21.40.145
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 1.1.1.1
+EOF
+
+sudo chmod 600 /etc/netplan/01-netcfg.yaml
+sudo netplan apply
+
+============================================================
+2. INSTALACIÓN DE MARIADB
+============================================================
+
+sudo apt update
+sudo apt install -y mariadb-server mariadb-client
+sudo systemctl enable mariadb
+sudo systemctl start mariadb
+
+============================================================
+3. CONFIGURACIÓN DE ESCUCHA DE MARIADB
+============================================================
+
+sudo sed -i \
+'s/^[[:space:]]*bind-address[[:space:]]*=.*/bind-address = 10.21.40.146/' \
+/etc/mysql/mariadb.conf.d/50-server.cnf
+
+sudo systemctl restart mariadb
+
+============================================================
+4. CREACIÓN DE BASE DE DATOS Y USUARIO
+============================================================
+
+sudo mariadb <<'SQL'
+CREATE DATABASE IF NOT EXISTS laboratorio;
+
+CREATE USER IF NOT EXISTS 'webapp'@'10.21.40.130'
+IDENTIFIED BY '<PASSWORD_LOCAL>';
+
+GRANT ALL PRIVILEGES
+ON laboratorio.*
+TO 'webapp'@'10.21.40.130';
+
+FLUSH PRIVILEGES;
+
+USE laboratorio;
+
+CREATE TABLE IF NOT EXISTS prueba (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    mensaje VARCHAR(100)
+);
+
+INSERT INTO prueba (mensaje)
+VALUES ('Conexion WEB-DB funcionando');
+SQL
+
+============================================================
+5. VERIFICACIÓN DEL DB-SERVER
+============================================================
+
+ip a show ens3
+ip route
+sudo systemctl status mariadb
+ss -lntp | grep 3306
+
+============================================================
+6. PRUEBA DE CONEXIÓN DESDE WEB-SERVER
+============================================================
+
+nc -vz 10.21.40.146 3306
+
+mysql -h 10.21.40.146 \
+-u webapp \
+-p \
+laboratorio

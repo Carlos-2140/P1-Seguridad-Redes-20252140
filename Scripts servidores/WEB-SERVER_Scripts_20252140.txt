@@ -1,0 +1,118 @@
+WEB-SERVER - SCRIPTS DE CONFIGURACIÓN
+Matrícula: 2025-2140
+IP: 10.21.40.130/28
+Gateway: 10.21.40.129
+VLAN: 20
+Interfaz: ens3
+
+============================================================
+1. CONFIGURACIÓN DE RED
+============================================================
+
+sudo tee /etc/netplan/01-netcfg.yaml > /dev/null <<'EOF'
+network:
+  version: 2
+  ethernets:
+    ens3:
+      dhcp4: false
+      addresses:
+        - 10.21.40.130/28
+      routes:
+        - to: default
+          via: 10.21.40.129
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 1.1.1.1
+EOF
+
+sudo chmod 600 /etc/netplan/01-netcfg.yaml
+sudo netplan apply
+
+============================================================
+2. INSTALACIÓN DEL SERVIDOR WEB
+============================================================
+
+sudo apt update
+sudo apt install -y apache2 openssl curl
+sudo systemctl enable apache2
+sudo systemctl start apache2
+
+============================================================
+3. HABILITAR HTTPS
+============================================================
+
+sudo a2enmod ssl
+
+sudo openssl req -x509 -nodes -days 365 \
+-newkey rsa:2048 \
+-keyout /etc/ssl/private/web-server.key \
+-out /etc/ssl/certs/web-server.crt \
+-subj "/C=DO/O=SeguridadRedes/CN=10.21.40.130" \
+-addext "subjectAltName=IP:10.21.40.130"
+
+============================================================
+4. CONFIGURACIÓN DEL VIRTUALHOST HTTPS
+============================================================
+
+sudo tee /etc/apache2/sites-available/web-https.conf > /dev/null <<'EOF'
+<VirtualHost *:443>
+    ServerName 10.21.40.130
+    DocumentRoot /var/www/html
+
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/web-server.crt
+    SSLCertificateKeyFile /etc/ssl/private/web-server.key
+
+    ErrorLog ${APACHE_LOG_DIR}/web-error.log
+    CustomLog ${APACHE_LOG_DIR}/web-access.log combined
+</VirtualHost>
+EOF
+
+sudo a2ensite web-https.conf
+sudo a2dissite 000-default.conf || true
+sudo apache2ctl configtest
+sudo systemctl restart apache2
+
+============================================================
+5. PÁGINA WEB DE PRUEBA
+============================================================
+
+sudo tee /var/www/html/index.html > /dev/null <<'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WEB-SERVER</title>
+</head>
+<body>
+    <h1>WEB-SERVER funcionando por HTTPS</h1>
+    <p>Servidor protegido por FortiGate.</p>
+</body>
+</html>
+EOF
+
+============================================================
+6. ARCHIVO EXE PARA PRUEBA DE FILE FILTER
+============================================================
+
+sudo curl -L \
+-o /var/www/html/test.exe \
+https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe
+
+============================================================
+7. ARCHIVO PARA PRUEBA DE RATE LIMITING
+============================================================
+
+sudo dd if=/dev/zero \
+of=/var/www/html/prueba-10mb.bin \
+bs=1M count=10
+
+============================================================
+8. VERIFICACIÓN DEL SERVIDOR WEB
+============================================================
+
+ip a show ens3
+ip route
+sudo systemctl status apache2
+ss -lntp | grep 443
+curl -k https://10.21.40.130
