@@ -25,7 +25,7 @@ Se implementaron ruta por defecto, NAT, DHCP, políticas de firewall, HTTPS, DPI
 
 ## Topología
 
-![Topología lógica](diagramas/topologia-logica.png)
+![Topología lógica](diagramas/topologia-logica.svg)
 
 ## Direccionamiento
 
@@ -54,7 +54,7 @@ Se implementaron ruta por defecto, NAT, DHCP, políticas de firewall, HTTPS, DPI
 
 ## Documentación
 
-- [Informe principal](docs/Informe_Laboratorio_20252140_P1.docx)
+- [Informe principal en Markdown](docs/Informe_Laboratorio.md)\n- Informe Word: `docs/Informe_Laboratorio_20252140_P1.docx` (archivo binario)
 - [Guion del video](video/Guion_Video_10min.md)
 - [Configuraciones](configs/)
 - [Scripts y pruebas](scripts/)
