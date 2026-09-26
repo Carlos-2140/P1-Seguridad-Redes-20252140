@@ -1,7 +1,7 @@
 # Laboratorio de Seguridad de Redes - P1
 
 **Video:** [Agregar enlace de YouTube u OneDrive](https://www.youtube.com/playlist?list=PLHu3QdN4_OEk)
-
+Link: https://www.youtube.com/playlist?list=PLHu3QdN4_OEk  
 
 ## Información
 
@@ -49,10 +49,6 @@ Se implementaron ruta por defecto, NAT, DHCP, políticas de firewall, HTTPS, DPI
 
 
 
-![EXE bloqueado](capturas/09-file-filter-log.png)
-
-![SYN flood detectado](capturas/12-dos-log.png)
-
 ## Nota de implementación
 
-La configuración de FortiGate se realizó y se validó desde la GUI. Durante el troubleshooting se utilizó la consola únicamente para recuperar acceso administrativo cuando fue necesario. La evidencia final se presenta desde la GUI.
+La configuración de FortiGate se realizó y se validó desde la GUI. 
