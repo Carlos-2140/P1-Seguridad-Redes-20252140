@@ -1,16 +1,11 @@
 # Laboratorio de Seguridad de Redes - P1
 
-## 🎥 Video demostrativo
+**Video:** [Agregar enlace de YouTube u OneDrive](https://www.youtube.com/playlist?list=PLHu3QdN4_OEk)
 
-**Video:** [Agregar enlace de YouTube u OneDrive](REEMPLAZAR_URL_VIDEO)
-
-> El enlace del video debe mantenerse al principio del repositorio.
-
----
 
 ## Información
 
-- **Estudiante:** REEMPLAZAR_NOMBRE
+- **Estudiante:** Carlos Ariel Rodriguez V
 - **Matrícula:** 2025-2140
 - **Práctica:** P1
 - **Plataforma:** GNS3
