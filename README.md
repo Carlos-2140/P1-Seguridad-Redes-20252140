@@ -47,19 +47,7 @@ Se implementaron ruta por defecto, NAT, DHCP, políticas de firewall, HTTPS, DPI
 - DoS Policy `PROTECT-WEB-DOS` con `tcp_syn_flood`.
 - VLAN 999 para puertos del switch no utilizados.
 
-## Documentación
 
-- [Informe principal en Markdown](docs/Informe_Laboratorio.md)\n- Informe Word: `docs/Informe_Laboratorio_20252140_P1.docx` (archivo binario)
-- [Guion del video](video/Guion_Video_10min.md)
-- [Configuraciones](configs/)
-- [Scripts y pruebas](scripts/)
-- [Evidencias](capturas/)
-
-## Evidencias destacadas
-
-![Ruta por defecto](capturas/02-ruta-default.png)
-
-![SQL Injection bloqueada](capturas/07-ips-log-sqli.png)
 
 ![EXE bloqueado](capturas/09-file-filter-log.png)
 
