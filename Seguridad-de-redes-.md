@@ -1,4 +1,0 @@
-Propósito del laboratorio
-El propósito de este laboratorio es diseñar, implementar y validar una infraestructura segmentada y protegida utilizando GNS3 y FortiGate. La solución separa usuarios, servidor web y servidor de base de datos mediante VLANs independientes y aplica controles de seguridad de red para restringir la comunicación entre segmentos.
-El laboratorio implementa control de acceso mediante políticas de firewall, NAT, DHCP, inspección profunda de tráfico HTTPS (DPI), prevención de intrusiones para detectar SQL Injection, cuarentena automática de hosts atacantes, bloqueo de archivos ejecutables, limitación de ancho de banda y protección contra ataques de denegación de servicio.
-El diseño utiliza direccionamiento derivado de la matrícula 2025-2140 y tiene como objetivo aplicar los principios de segmentación, mínimo privilegio, inspección de tráfico y defensa en profundidad.
