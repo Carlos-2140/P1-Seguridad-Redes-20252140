@@ -1,0 +1,3 @@
+Coloque aquí el backup/configuración exportada desde la GUI de FortiGate.
+Nombre sugerido: FortiGate_running_config.conf
+No publique contraseñas o secretos sin revisar el archivo.
