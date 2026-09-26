@@ -1,6 +1,6 @@
 **Video:** [https://www.youtube.com/playlist?list=PLHu3QdN4_OEk]
 
-> El enlace del video debe mantenerse al principio del repositorio.
+
 
 ---
 
@@ -21,7 +21,7 @@ Se implementaron ruta por defecto, NAT, DHCP, políticas de firewall, HTTPS, DPI
 
 ## Topología
 
-![Topología lógica](diagramas/topologia-logica.png)
+<img width="864" height="716" alt="image" src="https://github.com/user-attachments/assets/2346a501-95ba-4c41-bcad-70048e1ef8b2" />
 
 ## Direccionamiento
 
